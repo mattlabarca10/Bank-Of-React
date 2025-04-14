@@ -18,7 +18,7 @@ class App extends Component {
   constructor() {  // Create and initialize state
     super(); 
     this.state = {
-      accountBalance: 1234567.89,
+      accountBalance: 0.00,
       creditList: [],
       debitList: [],
       currentUser: {
@@ -52,7 +52,7 @@ class App extends Component {
   updateAccountBalance = () => {
     const totalCredit = this.state.creditList.reduce((sum, credit) => sum + credit.amount, 0);
     const totalDebit = this.state.debitList.reduce((sum, debit) => sum + debit.amount, 0);
-    const newBalance = this.state.accountBalance + totalCredit - totalDebit;
+    const newBalance = totalCredit - totalDebit;
     this.setState({accountBalance: newBalance});
   };
 
@@ -67,7 +67,7 @@ class App extends Component {
     };
     this.setState((prevState) => ({
       creditList: [...prevState.creditList, newCredit],
-    }), this.updateAcctBalance);
+    }), this.updateAccountBalance);
   };
 
   // Add a new debit item to the list of debits
@@ -81,7 +81,7 @@ class App extends Component {
     };
     this.setState((prevState) => ({
       debitList: [...prevState.debitList, newDebit],
-    }), this.updateAcctBalance);
+    }), this.updateAccountBalance);
   };
 
   // Create Routes and React elements to be rendered using React components
