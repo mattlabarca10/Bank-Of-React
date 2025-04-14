@@ -6,8 +6,6 @@ It contains the top-level state.
 ==================================================*/
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-
-// Import other components
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import LogIn from './components/Login';
@@ -15,7 +13,7 @@ import Credits from './components/Credits';
 import Debits from './components/Debits';
 
 class App extends Component {
-  constructor() {  // Create and initialize state
+  constructor() {  
     super(); 
     this.state = {
       accountBalance: 0.00,
@@ -42,8 +40,7 @@ class App extends Component {
       });
   }
 
-  // Update state's currentUser (userName) after "Log In" button is clicked
-  mockLogIn = (logInInfo) => {  
+  handleLogin = (logInInfo) => {  
     const newUser = {...this.state.currentUser};
     newUser.userName = logInInfo.userName;
     this.setState({currentUser: newUser})
@@ -56,11 +53,11 @@ class App extends Component {
     this.setState({accountBalance: newBalance});
   };
 
-  // Add a new credit item to the list of credits
+  // Add a new credit
   addCredit = (event) => {
     event.preventDefault();
     const newCredit = {
-      id: this.state.creditList.length + 1,
+      id: Date.now(),
       amount: parseFloat(event.target.amount.value),
       description: event.target.description.value,
       date: new Date().toISOString(),
@@ -70,7 +67,7 @@ class App extends Component {
     }), this.updateAccountBalance);
   };
 
-  // Add a new debit item to the list of debits
+  // Add a new debit
   addDebit = (event) => {
     event.preventDefault();
     const newDebit = {
@@ -84,9 +81,7 @@ class App extends Component {
     }), this.updateAccountBalance);
   };
 
-  // Create Routes and React elements to be rendered using React components
   render() {  
-    // Create React elements and pass input props to components
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance} />)
     const UserProfileComponent = () => (
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
